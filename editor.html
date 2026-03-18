@@ -18,13 +18,23 @@
 
 body{font-family:Varela Round;text-align:center;}
 
-.main{background:white;width:700px;margin:auto;padding:20px;}
+.main{
+background:white;
+width:700px;
+margin:auto;
+padding:20px;
+}
 
-#bgSelect img{width:80px;margin:5px;cursor:pointer;border:3px solid transparent;}
-#bgSelect img:hover{border:3px solid #00a9ff;}
+#bgSelect img{
+width:80px;
+margin:5px;
+cursor:pointer;
+border:3px solid transparent;
+}
 
-.ql-font-VarelaRound{font-family:"Varela Round";}
-.ql-font-GveretLevin{font-family:"Gveret Levin";}
+#bgSelect img:hover{
+border:3px solid #00a9ff;
+}
 
 </style>
 
@@ -61,44 +71,40 @@ body{font-family:Varela Round;text-align:center;}
 
 <script type="module">
 
-import {db,doc,setDoc,getDoc,deleteDoc} from "./firebase.js?v=2";
-
-let user=localStorage.user;
-if(!user)location="index.html";
-
-
-let Font=Quill.import("formats/font");
-Font.whitelist=["VarelaRound","GveretLevin","serif","sans-serif"];
-Quill.register(Font,true);
-
-let Size=Quill.import("attributors/class/size");
-Size.whitelist=["8px","10px","12px","14px","16px","18px","24px","32px","48px","60px","72px"];
-Quill.register(Size,true);
+import {
+db,
+doc,
+setDoc,
+getDoc,
+deleteDoc
+} from "./firebase.js";
 
 
-let quill=new Quill("#editor",{
+let user = localStorage.getItem("user");
+
+if(!user){
+location="index.html";
+}
+
+
+
+let quill = new Quill("#editor",{
 
 theme:"snow",
 
 modules:{
 toolbar:[
-
-[{font:["VarelaRound","GveretLevin","serif","sans-serif"]}],
-
-[{size:["8px","10px","12px","14px","16px","18px","24px","32px","48px","60px","72px"]}],
-
+[{font:[]}],
+[{size:[]}],
 ["bold","italic","underline"],
-
-[{ color: ['black','red','blue','green','orange','purple'] }],
-
+[{color:[]}],
 [{align:[]}],
-
 ["image"]
-
 ]
 }
 
 });
+
 
 
 let bgs=[
@@ -119,10 +125,10 @@ bgSelect.appendChild(img);
 });
 
 
-const ref=doc(db,"sites",user);
+const ref = doc(db,"sites",user);
 
 
-window.save=async function(){
+window.save = async function(){
 
 await setDoc(ref,{
 name:siteName.value,
@@ -135,9 +141,10 @@ alert("נשמר");
 };
 
 
+
 async function load(){
 
-let snap=await getDoc(ref);
+let snap = await getDoc(ref);
 
 if(snap.exists()){
 
@@ -152,19 +159,29 @@ bg=snap.data().bg;
 load();
 
 
-window.openSite=()=>location="site.html?u="+user;
 
-window.logout=()=>{
-localStorage.removeItem("user");
-location="index.html";
+window.openSite = function(){
+location="site.html?u="+user;
 };
 
-window.deleteUser=async()=>{
+
+
+window.logout = function(){
+
+localStorage.removeItem("user");
+location="index.html";
+
+};
+
+
+
+window.deleteUser = async function(){
 
 await deleteDoc(doc(db,"users",user));
 await deleteDoc(doc(db,"sites",user));
 
 localStorage.removeItem("user");
+
 location="index.html";
 
 };
