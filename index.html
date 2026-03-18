@@ -1,229 +1,349 @@
 <!DOCTYPE html>
 <html lang="he">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kidbo - מערכת לבניית אתרים</title>
-<style>
-  /* ===== עיצוב מקורי ===== */
-  body { font-family: Arial, sans-serif; margin:0; padding:0; background: url('background.jpg') no-repeat center center fixed; background-size: cover; }
-  .logo-container { text-align:center; margin:20px; }
-  .logo-container img { max-width:200px; }
-  .section { padding:20px; }
-  .hidden { display:none; }
-  #register-login { display:flex; justify-content:center; gap:40px; margin-bottom:30px; }
-  #register-box, #login-box { background: rgba(255,255,255,0.8); padding:20px; border-radius:10px; width:250px; }
-  #sites-list { background: rgba(255,255,255,0.8); padding:20px; border-radius:10px; margin:20px auto; max-width:600px; }
-  input, textarea { width:100%; margin:5px 0; padding:8px; border-radius:5px; border:1px solid #ccc; }
-  button { padding:10px; border:none; border-radius:5px; background:#007bff; color:#fff; cursor:pointer; }
-  button:hover { background:#0056b3; }
-  #editor-body { background: rgba(255,255,255,0.9); padding:20px; border-radius:10px; max-width:700px; margin:20px auto; }
-  #editor-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
-  #site-preview { background: rgba(0,0,0,0.05); padding:15px; border-radius:10px; margin-top:15px; }
-  #preview-image { max-width:100%; display:block; margin:10px 0; }
-  #preview-background { width:100%; height:150px; background-size:cover; margin-top:10px; }
-  .site-item { display:flex; align-items:center; gap:10px; padding:5px 0; }
-  .site-item img { width: 80px; height:50px; object-fit:cover; border-radius:5px; }
-</style>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kidbo</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Varela Round', sans-serif;
+      background-color: #f0f8ff;
+    }
+
+    /* לוגו */
+    #logo {
+      display: block;
+      margin: 20px auto;
+      max-width: 250px;
+    }
+
+    /* קופסאות התחברות והרשמה */
+    .auth-container {
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+      margin: 20px auto;
+      max-width: 900px;
+    }
+
+    .auth-box {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      flex: 1;
+    }
+
+    .auth-box h2 {
+      margin-top: 0;
+    }
+
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      background-color: #4a78ff;
+      color: white;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #365fd1;
+    }
+
+    /* רשימת אתרים */
+    #sites-list {
+      max-width: 900px;
+      margin: 20px auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .site-card {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      width: 200px;
+      text-align: center;
+    }
+
+    .site-card img {
+      width: 100%;
+      height: auto;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+
+    /* עורך אישי */
+    #editor-section {
+      display: none;
+      max-width: 900px;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    #editor-section input[type="text"], #editor-section textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0 15px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    #editor-section textarea {
+      height: 150px;
+      resize: vertical;
+    }
+
+    .editor-controls {
+      display: flex;
+      justify-content: flex-start;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .background-options {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .background-options div {
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    #editor-preview {
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: white;
+      margin-bottom: 15px;
+    }
+
+    /* תגובות */
+    #comments-section {
+      margin-top: 20px;
+    }
+
+    #comments-section textarea {
+      height: 100px;
+    }
+
+    /* הסתרת סקשנים */
+    .hidden {
+      display: none !important;
+    }
+  </style>
 </head>
 <body>
+  <!-- לוגו -->
+  <img id="logo" src="https://i.ibb.co/XyH6Q6C/kidbo.png" alt="Kidbo Logo">
 
-<!-- לוגו -->
-<div class="logo-container">
-  <img src="https://i.ibb.co/pjg57JfN/logo-2.png" alt="Kidbo Logo">
-</div>
-
-<!-- HOME SECTION -->
-<section id="home-section" class="section">
-  <div id="register-login">
-    <div id="register-box">
-      <h3>הרשמה</h3>
-      <input type="text" id="register-username" placeholder="שם משתמש">
-      <input type="password" id="register-password" placeholder="סיסמה">
-      <button id="register-btn">הרשמה</button>
+  <!-- דף הבית -->
+  <div id="home-section">
+    <div class="auth-container">
+      <!-- הרשמה -->
+      <div class="auth-box">
+        <h2>הרשמה</h2>
+        <input type="text" id="register-username" placeholder="שם משתמש">
+        <input type="password" id="register-password" placeholder="סיסמה">
+        <button id="register-btn">הרשמה</button>
+      </div>
+      <!-- כניסה -->
+      <div class="auth-box">
+        <h2>כניסה</h2>
+        <input type="text" id="login-username" placeholder="שם משתמש">
+        <input type="password" id="login-password" placeholder="סיסמה">
+        <button id="login-btn">כניסה</button>
+      </div>
     </div>
-    <div id="login-box">
-      <h3>כניסה</h3>
-      <input type="text" id="login-username" placeholder="שם משתמש">
-      <input type="password" id="login-password" placeholder="סיסמה">
-      <button id="login-btn">כניסה</button>
-    </div>
-  </div>
 
-  <div id="sites-list">
-    <h3>האתרים שלך</h3>
-    <ul id="sites-ul"></ul>
-  </div>
-</section>
-
-<!-- EDITOR SECTION -->
-<section id="editor-section" class="section hidden">
-  <div id="editor-header">
-    <span id="editor-user-label"></span>
-    <button id="editor-go-home">חזרה לדף הבית</button>
-    <button id="editor-logout">התנתקות</button>
-  </div>
-
-  <div id="editor-body">
-    <input type="text" id="site-title-input" placeholder="שם האתר">
-    <textarea id="editor-area" placeholder="כתוב כאן את תוכן האתר"></textarea>
-    <input type="text" id="site-image-input" placeholder="קישור לתמונה">
-    <input type="text" id="site-background-input" placeholder="קישור לרקע">
-    <button id="save-site-btn">שמור אתר</button>
-  </div>
-
-  <div id="site-preview">
-    <h3>תצוגה מקדימה חיה</h3>
-    <div id="preview-title"></div>
-    <div id="preview-content"></div>
-    <img id="preview-image" src="" alt="">
-    <div id="preview-background" style=""></div>
-    <div id="preview-comments">
-      <h4>תגובות</h4>
-      <ul id="comments-list"></ul>
-      <input type="text" id="comment-input" placeholder="כתוב תגובה">
-      <button id="comment-btn">שלח תגובה</button>
+    <h2 style="text-align:center;">האתרים שלך</h2>
+    <div id="sites-list">
+      <!-- האתרים יתווספו כאן -->
     </div>
   </div>
-</section>
 
-<script>
-const firebaseConfig = {
-    apiKey: "...",
-    authDomain: "kidbo-28f5d.firebaseapp.com",
-    databaseURL: "https://kidbo-28f5d-default-rtdb.firebaseio.com",
-    projectId: "kidbo-28f5d",
-    storageBucket: "kidbo-28f5d.firebasestorage.app",
-    messagingSenderId: "...",
-    appId: "..."
-};
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-const LS_CURRENT_USER_KEY = "kidbo_currentUser";
+  <!-- עורך אישי -->
+  <div id="editor-section">
+    <div class="editor-controls">
+      <button id="editor-go-home">חזרה לדף הבית</button>
+      <button id="editor-logout">התנתקות</button>
+      <span id="editor-user-label"></span>
+    </div>
 
-function setCurrentUser(user){ localStorage.setItem(LS_CURRENT_USER_KEY, JSON.stringify(user)); }
-function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem(LS_CURRENT_USER_KEY)); }catch{return null;} }
+    <h2>הגדרות האתר</h2>
+    <input type="text" id="site-name" placeholder="שם האתר שלך">
+    <input type="text" id="site-username-display" placeholder="שם משתמש מוצג בכותרת">
+    
+    <h3>תוכן האתר</h3>
+    <textarea id="site-content" placeholder="כתוב כאן את תוכן האתר שלך..."></textarea>
 
-function showSection(id){
-  document.getElementById("home-section").classList.add("hidden");
-  document.getElementById("editor-section").classList.add("hidden");
-  document.getElementById("site-view-section")?.classList.add("hidden");
-  document.getElementById(id).classList.remove("hidden");
-}
+    <h3>רקעים</h3>
+    <div class="background-options">
+      <div style="background-color:red;" onclick="setEditorBackground('red')"></div>
+      <div style="background-color:purple;" onclick="setEditorBackground('purple')"></div>
+      <div style="background-color:lightblue;" onclick="setEditorBackground('lightblue')"></div>
+      <div style="background-color:yellow;" onclick="setEditorBackground('yellow')"></div>
+      <div style="background-color:pink;" onclick="setEditorBackground('pink')"></div>
+      <div style="background-color:gray;" onclick="setEditorBackground('gray')"></div>
+    </div>
 
-// ================== הרשמה ==================
-document.getElementById("register-btn").onclick = async () => {
-  const username = document.getElementById("register-username").value;
-  const password = document.getElementById("register-password").value;
-  if(!username||!password) return alert("יש למלא שם וסיסמה");
-  const snap = await db.ref("users/"+username).get();
-  if(snap.exists()) return alert("שם משתמש קיים!");
-  await db.ref("users/"+username).set({username,password,sites:{}});
-  alert("נרשמת בהצלחה!");
-}
+    <button id="save-site-btn">שמור את האתר</button>
 
-// ================== כניסה ==================
-document.getElementById("login-btn").onclick = async () => {
-  const username = document.getElementById("login-username").value;
-  const password = document.getElementById("login-password").value;
-  if(!username||!password) return alert("יש למלא שם וסיסמה");
-  const snap = await db.ref("users/"+username).get();
-  if(!snap.exists() || snap.val().password!==password) return alert("שם משתמש או סיסמה לא נכונים!");
-  const user = snap.val();
-  setCurrentUser(user);
+    <div id="editor-preview"></div>
 
-  document.getElementById("editor-user-label").textContent = "מחובר: "+username;
-  document.getElementById("site-title-input").value="";
-  document.getElementById("editor-area").value="";
-  document.getElementById("site-image-input").value="";
-  document.getElementById("site-background-input").value="";
+    <h3>תגובות</h3>
+    <textarea id="comment-input" placeholder="כתוב תגובה..."></textarea>
+    <button id="add-comment-btn">הוסף תגובה</button>
+    <div id="comments-section"></div>
+  </div>
 
-  showSection("editor-section");
-}
+  <script>
+    // נתוני משתמשים ואתרים
+    let users = JSON.parse(localStorage.getItem('users') || '{}');
+    let currentUser = null;
 
-// ================== Logout / חזרה ==================
-document.getElementById("editor-logout").onclick = () => {
-  localStorage.removeItem(LS_CURRENT_USER_KEY);
-  showSection("home-section");
-  refreshSitesList();
-};
-document.getElementById("editor-go-home").onclick = () => {
-  showSection("home-section");
-  refreshSitesList();
-}
+    function setCurrentUser(user) {
+      currentUser = user;
+      document.getElementById("editor-user-label").textContent = "מחובר כ: " + user.username;
+    }
 
-// ================== שמירה ==================
-document.getElementById("save-site-btn").onclick = async () => {
-  const user = getCurrentUser();
-  if(!user) return alert("לא מחובר");
-  const title = document.getElementById("site-title-input").value;
-  const content = document.getElementById("editor-area").value;
-  const image = document.getElementById("site-image-input").value;
-  const background = document.getElementById("site-background-input").value;
-  if(!title) return alert("אנא הכנס שם לאתר");
+    function showSection(id) {
+      document.getElementById("home-section").classList.add("hidden");
+      document.getElementById("editor-section").classList.add("hidden");
+      document.getElementById(id).classList.remove("hidden");
+    }
 
-  const siteId = db.ref().child("users/"+user.username+"/sites").push().key;
-  const siteData = {title, content, image, background, comments:[]};
-  await db.ref("users/"+user.username+"/sites/"+siteId).set(siteData);
+    function renderSites() {
+      const sitesList = document.getElementById("sites-list");
+      sitesList.innerHTML = '';
+      for (let key in users) {
+        if (users[key].site) {
+          const site = users[key].site;
+          const card = document.createElement("div");
+          card.classList.add("site-card");
+          card.innerHTML = `
+            <h3>${site.name}</h3>
+            <div>${site.usernameDisplay}</div>
+            <div>${site.content}</div>
+          `;
+          sitesList.appendChild(card);
+        }
+      }
+    }
 
-  renderPreview(siteData);
-  refreshSitesList();
-  alert("האתר נשמר בהצלחה!");
-}
+    // פונקציות עורך
+    function setEditorBackground(color) {
+      document.getElementById("editor-preview").style.background = color;
+    }
 
-// ================== תצוגה מקדימה חיה ==================
-function renderPreview(site){
-  document.getElementById("preview-title").textContent = site.title;
-  document.getElementById("preview-content").textContent = site.content;
-  document.getElementById("preview-image").src = site.image||"";
-  document.getElementById("preview-background").style.backgroundImage = site.background?`url(${site.background})`:"";
-  renderComments(site.comments||[]);
-}
+    function saveSite() {
+      if (!currentUser) return;
+      currentUser.site = {
+        name: document.getElementById("site-name").value,
+        usernameDisplay: document.getElementById("site-username-display").value,
+        content: document.getElementById("site-content").value
+      };
+      users[currentUser.username] = currentUser;
+      localStorage.setItem("users", JSON.stringify(users));
+      renderSites();
+      alert("האתר נשמר!");
+    }
 
-// ================== תגובות ==================
-document.getElementById("comment-btn").onclick = async () => {
-  const comment = document.getElementById("comment-input").value;
-  if(!comment) return;
-  const user = getCurrentUser();
-  const sitesSnap = await db.ref("users/"+user.username+"/sites").get();
-  const siteId = Object.keys(sitesSnap.val())[0];
-  const commentsRef = db.ref("users/"+user.username+"/sites/"+siteId+"/comments");
-  await commentsRef.push(comment);
-  document.getElementById("comment-input").value="";
-  renderComments([...document.querySelectorAll("#comments-list li")].map(li=>li.textContent).concat(comment));
-}
+    // הרשמה
+    document.getElementById("register-btn").onclick = () => {
+      const username = document.getElementById("register-username").value;
+      const password = document.getElementById("register-password").value;
+      if (users[username]) { alert("שם המשתמש קיים!"); return; }
+      const user = { username, password, site: null };
+      users[username] = user;
+      localStorage.setItem("users", JSON.stringify(users));
+      alert("נרשמת בהצלחה!");
+    };
 
-// ================== טעינת תגובות ==================
-function renderComments(comments){
-  const list = document.getElementById("comments-list");
-  list.innerHTML="";
-  comments.forEach(c=>{
-    const li=document.createElement("li");
-    li.textContent=c;
-    list.appendChild(li);
-  });
-}
+    // כניסה
+    document.getElementById("login-btn").onclick = () => {
+      const username = document.getElementById("login-username").value;
+      const password = document.getElementById("login-password").value;
+      const user = users[username];
+      if (!user || user.password !== password) { alert("שם משתמש או סיסמה שגויים"); return; }
+      setCurrentUser(user);
+      showSection("editor-section");
+      renderEditorPreview();
+    };
 
-// ================== רשימת אתרים ==================
-async function refreshSitesList(){
-  const ul = document.getElementById("sites-ul");
-  ul.innerHTML="";
-  const user = getCurrentUser();
-  if(!user) return;
-  const snapshot = await db.ref("users/"+user.username+"/sites").get();
-  if(!snapshot.exists()) return;
-  Object.values(snapshot.val()).forEach(site=>{
-    const li = document.createElement("li");
-    li.className="site-item";
-    li.innerHTML = `<img src="${site.image||''}"><span>${site.title}</span>`;
-    ul.appendChild(li);
-  });
-}
+    document.getElementById("editor-go-home").onclick = () => {
+      showSection("home-section");
+      renderSites();
+    };
 
-// ================== טעינה ראשונית ==================
-window.addEventListener("load", async () => { refreshSitesList(); });
-</script>
+    document.getElementById("editor-logout").onclick = () => {
+      currentUser = null;
+      showSection("home-section");
+    };
+
+    document.getElementById("save-site-btn").onclick = saveSite;
+
+    document.getElementById("add-comment-btn").onclick = () => {
+      if (!currentUser || !currentUser.site) return;
+      const commentText = document.getElementById("comment-input").value;
+      if (!currentUser.site.comments) currentUser.site.comments = [];
+      currentUser.site.comments.push(commentText);
+      users[currentUser.username] = currentUser;
+      localStorage.setItem("users", JSON.stringify(users));
+      renderComments();
+    };
+
+    function renderEditorPreview() {
+      if (!currentUser || !currentUser.site) return;
+      const preview = document.getElementById("editor-preview");
+      preview.innerHTML = `
+        <h3>${currentUser.site.name}</h3>
+        <div>${currentUser.site.usernameDisplay}</div>
+        <p>${currentUser.site.content}</p>
+      `;
+      renderComments();
+    }
+
+    function renderComments() {
+      const commentsDiv = document.getElementById("comments-section");
+      commentsDiv.innerHTML = '';
+      if (!currentUser || !currentUser.site || !currentUser.site.comments) return;
+      currentUser.site.comments.forEach(c => {
+        const p = document.createElement("p");
+        p.textContent = c;
+        commentsDiv.appendChild(p);
+      });
+    }
+
+    // טעינת אתרים בדף הבית
+    window.addEventListener("load", () => {
+      renderSites();
+    });
+
+  </script>
 </body>
 </html>
