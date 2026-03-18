@@ -42,11 +42,11 @@ border:3px solid transparent;
 border:3px solid #00a9ff;
 }
 
-.ql-font-Gveret\ Levin{
+.ql-font-GveretLevin{
 font-family:"Gveret Levin";
 }
 
-.ql-font-Varela\ Round{
+.ql-font-VarelaRound{
 font-family:"Varela Round";
 }
 
@@ -105,6 +105,35 @@ let user = localStorage.user;
 if(!user) location="index.html";
 
 
+// ===== FONT LIST =====
+
+let Font = Quill.import('formats/font');
+
+Font.whitelist = [
+"VarelaRound",
+"GveretLevin",
+"serif",
+"sans-serif",
+"monospace"
+];
+
+Quill.register(Font,true);
+
+
+// ===== SIZE LIST =====
+
+let Size = Quill.import('attributors/style/size');
+
+Size.whitelist = [
+"8px","10px","12px","14px","16px","18px",
+"24px","32px","48px","60px","72px"
+];
+
+Quill.register(Size,true);
+
+
+// ===== EDITOR =====
+
 let quill = new Quill('#editor', {
 
 theme:'snow',
@@ -113,14 +142,16 @@ modules:{
 toolbar:[
 
 [{font:[
-"Varela Round",
-"Gveret Levin",
+"VarelaRound",
+"GveretLevin",
 "serif",
-"sans-serif",
-"monospace"
+"sans-serif"
 ]}],
 
-[{size:['small',false,'large','huge']}],
+[{size:[
+"8px","10px","12px","14px","16px",
+"18px","24px","32px","48px","60px","72px"
+]}],
 
 ['bold','italic','underline'],
 
@@ -137,6 +168,8 @@ toolbar:[
 });
 
 
+
+// ===== BACKGROUNDS =====
 
 let bgs=[
 
@@ -173,9 +206,7 @@ window.save = async function(){
 await setDoc(ref,{
 
 name: siteName.value,
-
 html: quill.root.innerHTML,
-
 bg:bg
 
 });
@@ -192,9 +223,7 @@ let snap=await getDoc(ref);
 if(snap.exists()){
 
 siteName.value=snap.data().name;
-
 quill.root.innerHTML=snap.data().html;
-
 bg=snap.data().bg;
 
 }
@@ -214,7 +243,6 @@ location="site.html?u="+user;
 window.logout=function(){
 
 localStorage.removeItem("user");
-
 location="index.html";
 
 };
@@ -223,7 +251,6 @@ location="index.html";
 window.deleteUser=async function(){
 
 await deleteDoc(doc(db,"users",user));
-
 await deleteDoc(doc(db,"sites",user));
 
 localStorage.removeItem("user");
