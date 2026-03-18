@@ -688,6 +688,26 @@ function setCurrentUser(user) {
   }
 }
 
+function showSection(id) {
+
+  document
+    .getElementById("home-section")
+    .classList.add("hidden");
+
+  document
+    .getElementById("editor-section")
+    .classList.add("hidden");
+
+  document
+    .getElementById("site-view-section")
+    .classList.add("hidden");
+
+  document
+    .getElementById(id)
+    .classList.remove("hidden");
+
+}
+  
 
 function generateId() {
   return "id-" + Date.now() + "-" + Math.random().toString(36).slice(2);
@@ -871,7 +891,16 @@ document
 
       setCurrentUser(user);
 
-      alert("נכנסת");
+alert("נכנסת");
+
+document.getElementById(
+  "site-username-display"
+).value = user.username;
+
+document.getElementById(
+  "editor-user-label"
+).textContent =
+  "מחובר: " + user.username;
 
 showSection("editor-section");
       
@@ -925,6 +954,21 @@ window.addEventListener(
   }
 );
 
+// פונקציה שמראה חלק מסוים ומסתירה את האחרים
+function showSection(id) {
+  document.getElementById("home-section").classList.add("hidden");
+  document.getElementById("editor-section").classList.add("hidden");
+  document.getElementById("site-view-section").classList.add("hidden");
+  document.getElementById(id).classList.remove("hidden");
+}
+
+// כפתור "חזרה לעמוד הבית" בעורך
+document.getElementById("editor-go-home").onclick = () => {
+  showSection("home-section");
+  refreshSitesList();
+};
+
+  
 </script>
 
 
