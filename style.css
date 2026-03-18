@@ -65,3 +65,44 @@ width:250px;
 vertical-align:top;
 
 }
+
+
+/* ===== תיקוני עורך ואתר אישי ===== */
+
+.ql-font-VarelaRound{
+font-family:"Varela Round";
+}
+
+.ql-font-GveretLevin{
+font-family:"Gveret Levin";
+}
+
+.ql-size-8px{font-size:8px;}
+.ql-size-10px{font-size:10px;}
+.ql-size-12px{font-size:12px;}
+.ql-size-14px{font-size:14px;}
+.ql-size-16px{font-size:16px;}
+.ql-size-18px{font-size:18px;}
+.ql-size-24px{font-size:24px;}
+.ql-size-32px{font-size:32px;}
+.ql-size-48px{font-size:48px;}
+.ql-size-60px{font-size:60px;}
+.ql-size-72px{font-size:72px;}
+
+
+/* צדדים באתר אישי */
+
+.side{
+
+position:fixed;
+top:0;
+bottom:0;
+width:200px;
+background-size:200px;
+background-repeat:repeat;
+z-index:-1;
+
+}
+
+#left{left:0;}
+#right{right:0;}
