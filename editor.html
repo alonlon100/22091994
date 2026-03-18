@@ -5,63 +5,50 @@
 
 <meta charset="UTF-8">
 
-<title>עורך האתר</title>
+<title>עורך</title>
 
 <link rel="stylesheet" href="style.css">
 
-<link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
 <script type="module" src="firebase.js"></script>
 
 </head>
 
-
 <body>
 
 <div class="main">
 
-<h2>עורך האתר האישי</h2>
+<h2>עורך האתר</h2>
 
-שם האתר:<br>
-<input id="siteName"><br><br>
+שם האתר
 
+<br>
 
-<button onclick="bold()">מודגש</button>
-<button onclick="italic()">נטוי</button>
-<button onclick="center()">מרכוז</button>
-<button onclick="big()">כותרת</button>
-<button onclick="img()">תמונה</button>
+<input id="siteName">
 
 <br><br>
 
-<textarea id="html" style="width:100%;height:200px"></textarea>
+בחירת רקע:
+
+<br>
+
+<div id="bgSelect"></div>
 
 <br><br>
 
-רקע:
+<div id="editor" style="height:300px"></div>
 
-<select id="bg">
-
-<option value="">ללא</option>
-
-<option value="https://i.ibb.co/4wXF4Jh5/514971w649bnc4h7.gif">1</option>
-<option value="https://i.ibb.co/xKSFXQ6p/1028701nidgo5cnnh.gif">2</option>
-<option value="https://i.ibb.co/GQRtGjbP/1301959bqir6wvcvv.gif">3</option>
-<option value="https://i.ibb.co/VpWKtQ9z/1254492hl9oznlwgq.gif">4</option>
-<option value="https://i.ibb.co/v4YFzCGH/1253900io7iftppfb.gif">5</option>
-
-</select>
-
-<br><br>
+<br>
 
 <button onclick="save()">שמירה</button>
-<button onclick="openSite()">מעבר לאתר"
 
-<h3>תצוגה מקדימה</h3>
-
-<div id="preview" style="border:1px solid #ccc;min-height:200px"></div>
+<button onclick="openSite()">מעבר לאתר</button>
 
 </div>
+
 
 
 <script type="module">
@@ -73,61 +60,58 @@ setDoc,
 getDoc
 } from "./firebase.js";
 
+
 let user = localStorage.user;
 
-if (!user) {
-location = "index.html";
-}
+if(!user) location="index.html";
 
-html.oninput = update;
-bg.onchange = update;
 
-function update() {
+let quill = new Quill('#editor', {
+theme: 'snow'
+});
 
-preview.innerHTML =
-"<div style='background:url(" + bg.value + ")'>" +
-html.value +
-"</div>";
 
-}
+let bgs = [
 
-window.bold = function () {
-html.value += "<b>טקסט</b>";
-update();
+"https://i.ibb.co/4wXF4Jh5/514971w649bnc4h7.gif",
+"https://i.ibb.co/xKSFXQ6p/1028701nidgo5cnnh.gif",
+"https://i.ibb.co/GQRtGjbP/1301959bqir6wvcvv.gif",
+"https://i.ibb.co/VpWKtQ9z/1254492hl9oznlwgq.gif",
+"https://i.ibb.co/v4YFzCGH/1253900io7iftppfb.gif"
+
+];
+
+let bg = "";
+
+bgs.forEach(u=>{
+
+let img = document.createElement("img");
+
+img.src = u;
+
+img.width = 80;
+
+img.onclick=()=>{
+
+bg = u;
+
 };
 
-window.italic = function () {
-html.value += "<i>טקסט</i>";
-update();
-};
+bgSelect.appendChild(img);
 
-window.center = function () {
-html.value += "<div style='text-align:center'>טקסט</div>";
-update();
-};
-
-window.big = function () {
-html.value += "<h2>כותרת</h2>";
-update();
-};
-
-window.img = function () {
-let u = prompt("קישור");
-html.value += "<img src='" + u + "' width=200>";
-update();
-};
+});
 
 
-const ref = doc(db, "site", "main");
+const ref = doc(db,"site","main");
 
 
-window.save = async function () {
+window.save = async function(){
 
-await setDoc(ref, {
+await setDoc(ref,{
 
 name: siteName.value,
-html: html.value,
-bg: bg.value
+html: quill.root.innerHTML,
+bg: bg
 
 });
 
@@ -136,17 +120,17 @@ alert("נשמר");
 };
 
 
-async function load() {
+async function load(){
 
-const snap = await getDoc(ref);
+let snap = await getDoc(ref);
 
-if (snap.exists()) {
+if(snap.exists()){
 
-siteName.value = snap.data().name || "";
-html.value = snap.data().html || "";
-bg.value = snap.data().bg || "";
+siteName.value = snap.data().name;
 
-update();
+quill.root.innerHTML = snap.data().html;
+
+bg = snap.data().bg;
 
 }
 
@@ -155,14 +139,13 @@ update();
 load();
 
 
-window.openSite = function () {
+window.openSite=function(){
 
-location = "site.html";
+location="site.html";
 
 };
 
 </script>
-
 
 </body>
 </html>
