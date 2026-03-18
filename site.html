@@ -19,11 +19,9 @@ body{
 
 margin:0;
 font-family:Varela Round;
-
-background:black;
+background:white;
 
 }
-
 
 .side{
 
@@ -40,20 +38,13 @@ z-index:-1;
 
 }
 
-
 #left{
-
 left:0;
-
 }
-
 
 #right{
-
 right:0;
-
 }
-
 
 .main{
 
@@ -65,14 +56,12 @@ padding:20px;
 
 }
 
-
 h1{
 
 font-family:Gveret Levin;
 color:#00a9ff;
 
 }
-
 
 button{
 
@@ -93,13 +82,16 @@ cursor:pointer;
 
 
 <div id="left" class="side"></div>
-
 <div id="right" class="side"></div>
 
 
 <div class="main">
 
+<button onclick="home()">דף הבית</button>
+
 <h1 id="title"></h1>
+
+<div id="author"></div>
 
 <div id="content"></div>
 
@@ -160,6 +152,8 @@ let data = snap.data();
 
 
 title.innerText = data.name;
+
+author.innerText = "נבנה על ידי: " + user;
 
 content.innerHTML = data.html;
 
@@ -233,6 +227,12 @@ location="editor.html";
 
 };
 
+
+window.home=function(){
+
+location="index.html";
+
+};
 
 </script>
 
