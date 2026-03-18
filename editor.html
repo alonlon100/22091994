@@ -200,5 +200,38 @@ location="site.html?id="+user;
 </script>
 
 
+  <script type="module">
+
+import { db } from "./firebase.js";
+import {
+  doc,
+  setDoc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const textarea = document.getElementById("editor");
+const saveBtn = document.getElementById("save");
+
+const ref = doc(db, "site", "main");
+
+saveBtn.onclick = async () => {
+  await setDoc(ref, {
+    content: textarea.value
+  });
+  alert("נשמר");
+};
+
+async function load() {
+  const snap = await getDoc(ref);
+  if (snap.exists()) {
+    textarea.value = snap.data().content;
+  }
+}
+
+load();
+
+</script>
+
+
 </body>
 </html>
