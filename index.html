@@ -100,28 +100,28 @@ location = "editor.html";
 
 window.login = async function(){
 
-let u = logUser.value;
-let p = logPass.value;
+let u = document.getElementById("logUser").value;
+let p = document.getElementById("logPass").value;
 
-let ref = doc(db,"users",u);
+const ref = doc(db,"users",u);
 
-let snap = await getDoc(ref);
+const snap = await getDoc(ref);
 
 if(!snap.exists()){
-alert("לא קיים");
+alert("משתמש לא קיים");
 return;
 }
 
-if(snap.data().password != p){
+if(snap.data().password !== p){
 alert("סיסמה שגויה");
 return;
 }
 
-localStorage.user = u;
+localStorage.setItem("user",u);
 
-location = "editor.html";
+location.href = "editor.html";
 
-};
+}
 
 
 
