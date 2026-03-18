@@ -661,7 +661,9 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const db = firebase.database();
-
+db.ref("test").set({
+  hello: "world"
+});
 const LS_CURRENT_USER_KEY = "kidbo_currentUser";
 
 
