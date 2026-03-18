@@ -74,11 +74,23 @@ Font.whitelist=["VarelaRound","GveretLevin","serif","sans-serif"];
 Quill.register(Font,true);
 
 
-let Size=Quill.import("attributors/style/size");
+var Size = Quill.import('attributors/class/size');
 
-Size.whitelist=["8px","10px","12px","14px","16px","18px","24px","32px","48px","60px","72px"];
+Size.whitelist = [
+"8px",
+"10px",
+"12px",
+"14px",
+"16px",
+"18px",
+"24px",
+"32px",
+"48px",
+"60px",
+"72px"
+];
 
-Quill.register(Size,true);
+Quill.register(Size, true);
 
 
 let quill=new Quill("#editor",{
