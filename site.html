@@ -5,27 +5,84 @@
 
 <meta charset="UTF-8">
 
-<title>site</title>
+<title>אתר</title>
+
+<link rel="stylesheet" href="style.css">
 
 <link href="https://fonts.googleapis.com/css2?family=Varela+Round&family=Gveret+Levin&display=swap" rel="stylesheet">
+
+<script type="module" src="firebase.js"></script>
 
 <style>
 
 body{
+
 margin:0;
+font-family:Varela Round;
+
+background:black;
+
 }
+
+
+.side{
+
+position:fixed;
+top:0;
+bottom:0;
+width:200px;
+
+background-size:200px;
+
+background-repeat:repeat;
+
+z-index:-1;
+
+}
+
+
+#left{
+
+left:0;
+
+}
+
+
+#right{
+
+right:0;
+
+}
+
 
 .main{
-background:white;
-width:800px;
+
+width:700px;
 margin:auto;
+background:white;
 min-height:100vh;
 padding:20px;
+
 }
 
-.top{
-background:#eee;
+
+h1{
+
+font-family:Gveret Levin;
+color:#00a9ff;
+
+}
+
+
+button{
+
+background:#00a9ff;
+color:white;
+border:none;
 padding:10px;
+margin:5px;
+cursor:pointer;
+
 }
 
 </style>
@@ -34,13 +91,11 @@ padding:10px;
 
 <body>
 
-<div class="top">
 
-<button onclick="home()">
-חזרה לדף הבית
-</button>
+<div id="left" class="side"></div>
 
-</div>
+<div id="right" class="side"></div>
+
 
 <div class="main">
 
@@ -48,49 +103,75 @@ padding:10px;
 
 <div id="content"></div>
 
+
+<hr>
+
+תגובות
+
+<br>
+
+<input id="comment">
+
+<button onclick="addComment()">שלח</button>
+
+<div id="comments"></div>
+
+
+<br>
+
+<button onclick="back()">
+חזרה לעורך
+</button>
+
 </div>
+
 
 
 <script type="module">
 
 import {
+
 db,
 doc,
-getDoc
-} from "./firebase.js?v=2";
+getDoc,
+setDoc,
+collection,
+getDocs
+
+} from "./firebase.js";
 
 
-function getUser(){
+let params = new URLSearchParams(location.search);
 
-let p = new URLSearchParams(location.search);
+let user = params.get("u");
 
-return p.get("u");
 
-}
+const ref = doc(db,"sites",user);
 
 
 async function load(){
 
-let u = getUser();
-
-let snap = await getDoc(
-doc(db,"sites",u)
-);
+let snap = await getDoc(ref);
 
 if(!snap.exists()) return;
 
+
 let data = snap.data();
+
 
 title.innerText = data.name;
 
 content.innerHTML = data.html;
 
-content.style.fontFamily = data.font;
 
-content.style.color = data.color;
+left.style.backgroundImage =
+"url("+data.bg+")";
 
-document.body.style.background =
-"url("+data.bg+") repeat";
+right.style.backgroundImage =
+"url("+data.bg+")";
+
+
+loadComments();
 
 }
 
@@ -98,13 +179,63 @@ document.body.style.background =
 load();
 
 
-window.home=function(){
 
-location.href="index.html";
+const comRef = collection(db,"comments",user,"list");
+
+
+async function loadComments(){
+
+comments.innerHTML="";
+
+let q = await getDocs(comRef);
+
+q.forEach(d=>{
+
+let div=document.createElement("div");
+
+div.innerText=d.data().text;
+
+comments.appendChild(div);
+
+});
+
+}
+
+
+
+window.addComment = async function(){
+
+await setDoc(
+
+doc(comRef,Date.now().toString()),
+
+{
+
+text:comment.value
+
+}
+
+);
+
+comment.value="";
+
+loadComments();
 
 };
+
+
+
+window.back=function(){
+
+if(localStorage.user==user)
+
+location="editor.html";
+
+};
+
 
 </script>
 
 </body>
+
 </html>
