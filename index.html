@@ -74,23 +74,17 @@ margin:10px;
 </h1>
 
 
-<div class="box">
+<div class="box" style="display: flex; flex-direction: column; gap: 10px; width: 250px;">
 
-הרשמה
+  <!-- כותרת -->
+  <label style="font-weight: bold;">הרשמה</label>
 
-<br>
+  <!-- שדות קלט -->
+  <input id="regUser" placeholder="בחר כינוי" style="padding: 8px; width: 100%; box-sizing: border-box;">
+  <input id="regPass" placeholder="בחר סיסמה" style="padding: 8px; width: 100%; box-sizing: border-box;">
 
-<input id="regUser" placeholder="בחר כינוי">
-
-<br>
-
-<input id="regPass" placeholder="בחר סיסמה">
-
-<br>
-
-<button onclick="register()">
-הרשמה
-</button>
+  <!-- כפתור -->
+  <button onclick="register()" style="padding: 8px; width: 100%;">הרשמה</button>
 
 </div>
 
