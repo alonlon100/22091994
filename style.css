@@ -57,6 +57,10 @@ font-family:'Varela Round', sans-serif;
 
 }
 
+button:hover{
+    background:#6cb2f8;
+}
+
 
 .box{
 
