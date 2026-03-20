@@ -36,6 +36,50 @@ border:3px solid transparent;
 border:3px solid #00a9ff;
 }
 
+
+
+/* כאן הוספת */
+
+.ql-snow .ql-picker.ql-font .ql-picker-item::before{
+content: attr(data-value);
+}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label::before{
+content: attr(data-value);
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-item::before{
+content: attr(data-value);
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label::before{
+content: attr(data-value);
+}
+
+.ql-font-VarelaRound{
+font-family:'Varela Round',sans-serif;
+}
+
+.ql-font-GveretLevin{
+font-family:'Gveret Levin',serif;
+}
+
+.ql-font-serif{
+font-family:serif;
+}
+
+.ql-font-sans-serif{
+font-family:sans-serif;
+}
+
+
+  
+
+
+
+
+
+  
 </style>
 
 </head>
@@ -98,7 +142,7 @@ Font.whitelist = [
 
 Quill.register(Font, true);
 
-let Size = Quill.import("attributors/class/size");
+let Size = Quill.import("attributors/style/size");
 
 Size.whitelist = [
 "8px","10px","12px","14px","16px",
