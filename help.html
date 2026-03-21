@@ -44,6 +44,8 @@ font-family:Gveret Levin;
 color:#00a9ff;
 }
 
+
+
 #kipo{
 animation: shake 3s infinite;
 }
@@ -67,6 +69,7 @@ animation: shake 0.4s infinite;
 100%{transform:translate(0,0) rotate(0deg)}
 
 }
+
 
 
 .menu{
@@ -152,7 +155,7 @@ getDoc
 let admin = localStorage.getItem("admin");
 
 
-if(admin==="yes"){
+if(admin=="yes"){
 
 let b=document.createElement("button");
 
@@ -177,8 +180,7 @@ let snap = await getDoc(doc(db,"pages","help"));
 
 if(snap.exists()){
 
-document.getElementById("content").innerHTML =
-snap.data().html;
+content.innerHTML=snap.data().html;
 
 }
 
