@@ -15,6 +15,7 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Varela+Round&family=Gveret+Levin&display=swap" rel="stylesheet">
 
+
 <style>
 
 body{
@@ -67,6 +68,7 @@ animation: shake 0.4s infinite;
 
 }
 
+
 .menu{
 margin:10px;
 padding:10px;
@@ -111,6 +113,7 @@ transform:scale(1.05);
 </h1>
 
 
+
 <div class="menu">
 
 <button onclick="location.href='index.html'">
@@ -128,11 +131,13 @@ transform:scale(1.05);
 </div>
 
 
+
 <h2>עזרים ומדריכים לאתר האישי</h2>
 
 <div id="content"></div>
 
 </div>
+
 
 
 <script type="module">
@@ -144,16 +149,10 @@ getDoc
 } from "./firebase.js";
 
 
-console.log("script loaded");
-
 let admin = localStorage.getItem("admin");
-
-console.log("admin =", admin);
 
 
 if(admin==="yes"){
-
-console.log("admin detected");
 
 let b=document.createElement("button");
 
