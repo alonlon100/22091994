@@ -131,11 +131,56 @@ transform:scale(1.05);
 
 <h2>עזרים ומדריכים לאתר האישי</h2>
 
-<p>
-כאן תוסיף מדריכים
-</p>
+<div id="content"></div>
 
 </div>
+
+
+  <script type="module">
+
+import {
+db,
+doc,
+getDoc
+} from "./firebase.js";
+
+
+let user = localStorage.getItem("user");
+
+
+if(user=="kipo"){
+
+let b=document.createElement("button");
+
+b.innerText="ערוך עמוד";
+
+b.style.position="fixed";
+b.style.bottom="10px";
+b.style.left="10px";
+
+b.onclick=()=>location="help_editor.html";
+
+document.body.appendChild(b);
+
+}
+
+
+
+async function load(){
+
+let snap = await getDoc(doc(db,"pages","help"));
+
+if(snap.exists()){
+
+content.innerHTML=snap.data().html;
+
+}
+
+}
+
+load();
+
+</script>
 
 </body>
 </html>
