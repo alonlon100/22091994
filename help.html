@@ -16,7 +16,28 @@
 
 <style>
 
-/* ===== אותו MENU כמו ב INDEX ===== */
+/* ===== בדיוק כמו INDEX ===== */
+
+body{
+font-family:Varela Round;
+text-align:center;
+
+background:url(https://i.ibb.co/nMmWgCMg/atar.png);
+background-repeat:repeat;
+animation:bg 20s linear infinite;
+}
+
+@keyframes bg{
+from{background-position:0 0}
+to{background-position:500px 0}
+}
+
+.main{
+background:white;
+width:600px;
+margin:auto;
+padding:20px;
+}
 
 .menu{
 margin:10px;
@@ -35,6 +56,7 @@ background:#00a9ff;
 color:white;
 border:none;
 padding:15px;
+margin:5px;
 cursor:pointer;
 font-family:'Varela Round', sans-serif;
 font-size:20px;
@@ -52,6 +74,7 @@ transform:scale(1.05);
 </head>
 
 
+
 <body>
 
 <div class="main">
@@ -61,6 +84,7 @@ transform:scale(1.05);
 <h1>
 עזרים ומדריכים לאתר האישי
 </h1>
+
 
 
 <div class="menu">
@@ -99,7 +123,8 @@ getDoc
 } from "./firebase.js";
 
 
-// ===== כפתור עורך למנהל =====
+
+// ===== כפתור עורך =====
 
 if(localStorage.admin=="yes"){
 
@@ -119,7 +144,7 @@ document.body.appendChild(b);
 
 
 
-// ===== טעינת תוכן מהעורך =====
+// ===== טעינת תוכן =====
 
 async function load(){
 
