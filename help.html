@@ -7,8 +7,6 @@
 
 <title>עזרים ומדריכים</title>
 
-<script type="module" src="firebase.js"></script>
-
 <meta name="viewport" content="initial-scale=0.35">
 
 <link rel="stylesheet" href="style.css">
@@ -18,59 +16,7 @@
 
 <style>
 
-body{
-font-family:Varela Round;
-text-align:center;
-
-background:url(https://i.ibb.co/nMmWgCMg/atar.png);
-background-repeat:repeat;
-animation:bg 20s linear infinite;
-}
-
-@keyframes bg{
-from{background-position:0 0}
-to{background-position:500px 0}
-}
-
-.main{
-background:white;
-width:600px;
-margin:auto;
-padding:20px;
-}
-
-h1{
-font-family:Gveret Levin;
-color:#00a9ff;
-}
-
-
-
-#kipo{
-animation: shake 3s infinite;
-}
-
-#kipo:hover{
-animation: shake 0.4s infinite;
-}
-
-@keyframes shake{
-
-0%{transform:translate(0,0) rotate(0deg)}
-10%{transform:translate(-2px,2px) rotate(-2deg)}
-20%{transform:translate(2px,-2px) rotate(2deg)}
-30%{transform:translate(-2px,2px) rotate(-2deg)}
-40%{transform:translate(2px,-2px) rotate(2deg)}
-50%{transform:translate(-2px,2px) rotate(-2deg)}
-60%{transform:translate(2px,-2px) rotate(2deg)}
-70%{transform:translate(-2px,2px) rotate(-1deg)}
-80%{transform:translate(2px,-2px) rotate(1deg)}
-90%{transform:translate(-1px,1px) rotate(0deg)}
-100%{transform:translate(0,0) rotate(0deg)}
-
-}
-
-
+/* ===== אותו MENU כמו ב INDEX ===== */
 
 .menu{
 margin:10px;
@@ -105,6 +51,7 @@ transform:scale(1.05);
 
 </head>
 
+
 <body>
 
 <div class="main">
@@ -112,9 +59,8 @@ transform:scale(1.05);
 <img id="kipo" src="https://i.ibb.co/XwCp4rC/Kipo.png" width="300">
 
 <h1>
-קיפו - מערכת חינמית לבניית אתרים לילדים
+עזרים ומדריכים לאתר האישי
 </h1>
-
 
 
 <div class="menu">
@@ -135,9 +81,10 @@ transform:scale(1.05);
 
 
 
-<h2>עזרים ומדריכים לאתר האישי</h2>
+<h2>עזרים ומדריכים</h2>
 
 <div id="content"></div>
+
 
 </div>
 
@@ -152,10 +99,9 @@ getDoc
 } from "./firebase.js";
 
 
-let admin = localStorage.getItem("admin");
+// ===== כפתור עורך למנהל =====
 
-
-if(admin=="yes"){
+if(localStorage.admin=="yes"){
 
 let b=document.createElement("button");
 
@@ -164,7 +110,6 @@ b.innerText="ערוך עמוד";
 b.style.position="fixed";
 b.style.bottom="10px";
 b.style.left="10px";
-b.style.zIndex="9999";
 
 b.onclick=()=>location="help_editor.html";
 
@@ -174,13 +119,18 @@ document.body.appendChild(b);
 
 
 
+// ===== טעינת תוכן מהעורך =====
+
 async function load(){
 
-let snap = await getDoc(doc(db,"pages","help"));
+let snap = await getDoc(
+doc(db,"pages","help")
+);
 
 if(snap.exists()){
 
-content.innerHTML=snap.data().html;
+content.innerHTML =
+snap.data().html;
 
 }
 
@@ -189,6 +139,7 @@ content.innerHTML=snap.data().html;
 load();
 
 </script>
+
 
 
 </body>
