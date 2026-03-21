@@ -5,16 +5,15 @@
 
 <meta charset="UTF-8">
 
-<title>עזרים ומדריכים לאתר האישי</title>
+<title>עזרים ומדריכים</title>
 
-  <script type="module" src="firebase.js"></script>
+<script type="module" src="firebase.js"></script>
 
 <meta name="viewport" content="initial-scale=0.35">
 
 <link rel="stylesheet" href="style.css">
 
 <link href="https://fonts.googleapis.com/css2?family=Varela+Round&family=Gveret+Levin&display=swap" rel="stylesheet">
-
 
 <style>
 
@@ -42,16 +41,6 @@ padding:20px;
 h1{
 font-family:Gveret Levin;
 color:#00a9ff;
-}
-
-button{
-background:#00a9ff;
-color:white;
-border:none;
-padding:10px;
-margin:5px;
-cursor:pointer;
-font-family:'Varela Round', sans-serif;
 }
 
 #kipo{
@@ -124,9 +113,17 @@ transform:scale(1.05);
 
 <div class="menu">
 
-<button onclick="location.href='index.html'">דף הבית</button>
-<button onclick="location.href='about.html'">אודות קיפו</button>
-<button onclick="location.href='help.html'">עזרים ומדריכים לאתר האישי</button>
+<button onclick="location.href='index.html'">
+דף הבית
+</button>
+
+<button onclick="location.href='about.html'">
+אודות קיפו
+</button>
+
+<button onclick="location.href='help.html'">
+עזרים ומדריכים לאתר האישי
+</button>
 
 </div>
 
@@ -147,12 +144,10 @@ getDoc
 } from "./firebase.js";
 
 
-let user = localStorage.getItem("user");
-
-console.log("user =", user);
+let admin = localStorage.getItem("admin");
 
 
-if(user=="kipo"){
+if(admin=="yes"){
 
 let b=document.createElement("button");
 
@@ -170,6 +165,7 @@ document.body.appendChild(b);
 }
 
 
+
 async function load(){
 
 let snap = await getDoc(doc(db,"pages","help"));
@@ -185,6 +181,7 @@ content.innerHTML=snap.data().html;
 load();
 
 </script>
+
 
 </body>
 </html>
