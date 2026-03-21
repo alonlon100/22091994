@@ -146,17 +146,7 @@ transform:scale(1.05);
 
 
 
-<script type="module">
-
-import {
-db,
-doc,
-getDoc
-} from "./firebase.js";
-
-
-
-// ===== כפתור עורך =====
+<script>
 
 if(localStorage.getItem("admin")=="yes"){
 
@@ -168,15 +158,25 @@ b.style.position="fixed";
 b.style.bottom="10px";
 b.style.left="10px";
 
-b.onclick=()=>location="help_editor.html";
+b.onclick=function(){
+location.href="help_editor.html";
+};
 
 document.body.appendChild(b);
 
 }
 
+</script>
 
 
-// ===== טעינת תוכן =====
+
+<script type="module">
+
+import {
+db,
+doc,
+getDoc
+} from "./firebase.js";
 
 async function load(){
 
@@ -186,7 +186,7 @@ doc(db,"pages","help")
 
 if(snap.exists()){
 
-content.innerHTML =
+document.getElementById("content").innerHTML =
 snap.data().html;
 
 }
