@@ -136,7 +136,7 @@ transform:scale(1.05);
 </div>
 
 
-  <script type="module">
+<script type="module">
 
 import {
 db,
@@ -146,6 +146,8 @@ getDoc
 
 
 let user = localStorage.getItem("user");
+
+console.log("user =", user);
 
 
 if(user=="kipo"){
@@ -157,13 +159,13 @@ b.innerText="ערוך עמוד";
 b.style.position="fixed";
 b.style.bottom="10px";
 b.style.left="10px";
+b.style.zIndex="9999";
 
 b.onclick=()=>location="help_editor.html";
 
 document.body.appendChild(b);
 
 }
-
 
 
 async function load(){
