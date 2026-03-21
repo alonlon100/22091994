@@ -111,11 +111,8 @@ getDoc
 } from "./firebase.js";
 
 
-
 let user = localStorage.getItem("user");
 
-
-/* רק מנהל */
 
 if(user!="kipo"){
 location="index.html";
@@ -124,19 +121,12 @@ location="index.html";
 
 
 let quill = new Quill("#editor",{
-
 theme:"snow",
-
-modules:{
-toolbar:"#toolbar"
-}
-
+modules:{ toolbar:"#toolbar" }
 });
 
 
-
 const ref = doc(db,"pages","help");
-
 
 
 window.save = async function(){
@@ -150,21 +140,19 @@ alert("נשמר");
 };
 
 
-
 async function load(){
 
 let snap = await getDoc(ref);
 
 if(snap.exists()){
 
-quill.root.innerHTML = snap.data().html;
+quill.root.innerHTML=snap.data().html;
 
 }
 
 }
 
 load();
-
 
 </script>
 
