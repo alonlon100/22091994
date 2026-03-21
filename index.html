@@ -454,7 +454,7 @@ signInWithEmailAndPassword(auth, email, pass)
 
 .then(() => {
 
-localStorage.admin = "yes";
+localStorage.setItem("admin","yes");
 
 alert("מנהל התחבר");
 
