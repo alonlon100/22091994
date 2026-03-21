@@ -144,10 +144,16 @@ getDoc
 } from "./firebase.js";
 
 
+console.log("script loaded");
+
 let admin = localStorage.getItem("admin");
 
+console.log("admin =", admin);
 
-if(admin=="yes"){
+
+if(admin==="yes"){
+
+console.log("admin detected");
 
 let b=document.createElement("button");
 
@@ -172,7 +178,8 @@ let snap = await getDoc(doc(db,"pages","help"));
 
 if(snap.exists()){
 
-content.innerHTML=snap.data().html;
+document.getElementById("content").innerHTML =
+snap.data().html;
 
 }
 
