@@ -198,5 +198,51 @@ load();
 </script>
 
 
+
+
+<script type="module">
+import { auth } from "./firebase.js";
+
+window.addEventListener("load", () => {
+
+  const isAdmin = localStorage.getItem("admin");
+
+  if (isAdmin === "yes") {
+
+    const btn = document.createElement("button");
+    btn.innerText = "ערוך עמוד";
+    btn.style.position = "fixed";
+    btn.style.bottom = "20px";
+    btn.style.left = "20px";
+    btn.style.zIndex = "9999";
+    btn.style.padding = "10px 20px";
+    btn.style.borderRadius = "10px";
+    btn.style.border = "none";
+    btn.style.background = "#4da3ff";
+    btn.style.color = "white";
+    btn.style.cursor = "pointer";
+
+    btn.onclick = () => {
+      window.location.href = "help_editor.html";
+    };
+
+    document.body.appendChild(btn);
+
+    console.log("ADMIN BUTTON ADDED");
+
+  } else {
+    console.log("NOT ADMIN");
+  }
+
+});
+</script>
+
+
+
+
+
+
+
+  
 </body>
 </html>
