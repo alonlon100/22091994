@@ -5,13 +5,60 @@
 
 <meta charset="UTF-8">
 
+<title>אודות קיפו</title>
+
 <meta name="viewport" content="initial-scale=0.35">
 
 <link rel="stylesheet" href="style.css">
 
 <link href="https://fonts.googleapis.com/css2?family=Varela+Round&family=Gveret+Levin&display=swap" rel="stylesheet">
 
+
 <style>
+
+body{
+font-family:Varela Round;
+text-align:center;
+
+background:url(https://i.ibb.co/nMmWgCMg/atar.png);
+background-repeat:repeat;
+animation:bg 20s linear infinite;
+}
+
+@keyframes bg{
+from{background-position:0 0}
+to{background-position:500px 0}
+}
+
+.main{
+background:white;
+width:600px;
+margin:auto;
+padding:20px;
+}
+
+h1{
+font-family:Gveret Levin;
+color:#00a9ff;
+}
+
+#kipo{
+animation: shake 3s infinite;
+}
+
+#kipo:hover{
+animation: shake 0.4s infinite;
+}
+
+@keyframes shake{
+
+0%{transform:translate(0,0)}
+25%{transform:translate(-2px,2px)}
+50%{transform:translate(2px,-2px)}
+75%{transform:translate(-2px,2px)}
+100%{transform:translate(0,0)}
+
+}
 
 .menu{
 margin:10px;
